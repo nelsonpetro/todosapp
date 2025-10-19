@@ -25,10 +25,9 @@ router.post("/", async (req, res) => {
 });
 
 // GET Get all Todos (for a specific user)
-router.get("/:user_id", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const user_id = req.session.userId;
-
     const result = await pool.query(
       "SELECT * FROM todos WHERE user_id = $1 ORDER BY created_at DESC",
       [user_id]
@@ -67,12 +66,13 @@ router.put("/:id", async (req, res) => {
 // PATCH Toggle completed
 router.patch("/:id/complete", async (req, res) => {
   try {
+    const user_id = req.session.userId;
     const { id } = req.params;
     const { completed } = req.body;
 
     const result = await pool.query(
       "UPDATE todos SET completed = $1 WHERE id = $2 RETURNING *",
-      [completed, id]
+      [completed, id, user_id]
     );
 
     if (result.rows.length === 0) {
