@@ -5,30 +5,46 @@ import pool from "./db.js";
 import todosRouter from "./routes/todos.js";
 import sessionMiddleware from "./middleware/session.js";
 import authRouter from "./routes/auth.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://127.0.0.1:5500', // Use exact origin
+  credentials: true
+}));
 app.use(express.json());
 app.use(sessionMiddleware);
-app.use("/auth", authRouter);
+
+// Serve static files from client directory
+app.use(express.static('client'));
+
+// API routes
+app.use("/api/users", authRouter);
+app.use("/api/todos", todosRouter);
 
 // Check DB status
-app.get("/db-test", async (req, res) => {
+app.get("/api/health", async (req, res) => {
   try {
     const result = await pool.query("SELECT NOW()");
-    res.json({ time: result.rows[0].now });
+    res.json({ 
+      status: 'success',
+      time: result.rows[0].now 
+    });
   } catch (err) {
     console.error(err);
-    res.status(500).send("Database error");
+    res.status(500).json({
+      status: 'error',
+      message: 'Database connection failed'
+    });
   }
 });
 
-// Todos route
-app.use("/todos", todosRouter);
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`✅ Server running on http://localhost:${PORT}`);

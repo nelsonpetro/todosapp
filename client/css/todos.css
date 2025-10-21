@@ -1,0 +1,129 @@
+/* Logout button positioning */
+.logout {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+#logout-btn {
+  background-color: var(--danger-color);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: 0.9rem;
+}
+
+#logout-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Container adjustments for todos page */
+body {
+  display: block;
+  padding-top: 80px; /* Space for fixed logout button */
+}
+
+.container {
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  max-width: calc(100% - 30vw); /* Prevent horizontal overlap */
+}
+
+header {
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+}
+
+#add-todo-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.todos-container {
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
+  padding-right: var(--spacing-xs);
+}
+
+#todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.todo-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.todo-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.todo-item.completed {
+  opacity: 0.7;
+}
+
+.todo-item.completed .todo-text {
+  text-decoration: line-through;
+  color: var(--text-color);
+}
+
+.todo-checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+}
+
+.todo-checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.delete-btn {
+  background-color: var(--danger-color);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: 0.9rem;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-xl);
+  color: #666;
+}
+
+/* Todo animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.todo-item {
+  animation: slideIn 0.3s ease;
+}

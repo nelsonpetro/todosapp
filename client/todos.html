@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Todos - Todo App</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/todos.css">
+</head>
+<body>
+    <div class="logout">
+        <button id="logout-btn">Logout</button>
+    </div>
+    <div class="container">
+        <header>
+            <h1>Todo App</h1>
+        </header>
+
+        <!-- Add Todo Form -->
+        <form id="add-todo-form">
+            <input type="text" id="new-todo" placeholder="What needs to be done?" required>
+            <button type="submit">Add</button>
+        </form>
+
+        <!-- Todo List -->
+        <div class="todos-container">
+            <ul id="todo-list"></ul>
+        </div>
+    </div>
+
+    <script src="/scripts/utils.js"></script>
+    <script src="/scripts/api.js"></script>
+    <script src="/scripts/todos.js"></script>
+    <script src="/scripts/auth.js"></script>
+</body>
+</html>

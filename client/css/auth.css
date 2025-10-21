@@ -1,0 +1,45 @@
+.auth-forms {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+}
+
+.auth-form h2 {
+  text-align: center;
+  color: var(--text-color);
+  margin-bottom: var(--spacing-md);
+}
+
+.auth-form button {
+  width: 100%;
+  margin-top: var(--spacing-sm);
+}
+
+.auth-form p {
+  text-align: center;
+  margin-top: var(--spacing-md);
+}
+
+.auth-form a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Form transition animations */
+.auth-form {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.auth-form.hidden {
+  opacity: 0;
+  transform: translateY(20px);
+}
