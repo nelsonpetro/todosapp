@@ -123,7 +123,9 @@ async function toggleTodoComplete(id, completed) {
 
 // Delete todo
 async function deleteTodoItem(id) {
-    if (!confirm('Are you sure you want to delete this todo?')) {
+    const confirmed = await showConfirmDialog('Are you sure you want to delete this todo?');
+    
+    if (!confirmed) {
         return;
     }
     

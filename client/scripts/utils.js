@@ -23,6 +23,75 @@ function showNotification(message, type = 'info') {
     }, 3000);
 }
 
+// Show confirmation dialog with custom UI
+function showConfirmDialog(message) {
+    return new Promise((resolve) => {
+        // Remove existing dialog if any
+        const existingDialog = document.querySelector('.confirm-dialog-overlay');
+        if (existingDialog) {
+            existingDialog.remove();
+        }
+        
+        // Create overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'confirm-dialog-overlay';
+        
+        // Create dialog box
+        const dialog = document.createElement('div');
+        dialog.className = 'confirm-dialog';
+        
+        // Create message
+        const messageEl = document.createElement('p');
+        messageEl.className = 'confirm-message';
+        messageEl.textContent = message;
+        
+        // Create button container
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'confirm-buttons';
+        
+        // Create confirm button (checkmark)
+        const confirmBtn = document.createElement('button');
+        confirmBtn.className = 'confirm-btn confirm-yes';
+        confirmBtn.innerHTML = '✓';
+        confirmBtn.setAttribute('aria-label', 'Confirm');
+        
+        // Create cancel button (x)
+        const cancelBtn = document.createElement('button');
+        cancelBtn.className = 'confirm-btn confirm-no';
+        cancelBtn.innerHTML = '✕';
+        cancelBtn.setAttribute('aria-label', 'Cancel');
+        
+        // Add event listeners
+        confirmBtn.addEventListener('click', () => {
+            overlay.remove();
+            resolve(true);
+        });
+        
+        cancelBtn.addEventListener('click', () => {
+            overlay.remove();
+            resolve(false);
+        });
+        
+        // Close on overlay click
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                overlay.remove();
+                resolve(false);
+            }
+        });
+        
+        // Assemble dialog
+        buttonContainer.appendChild(confirmBtn);
+        buttonContainer.appendChild(cancelBtn);
+        dialog.appendChild(messageEl);
+        dialog.appendChild(buttonContainer);
+        overlay.appendChild(dialog);
+        
+        // Add to body
+        document.body.appendChild(overlay);
+    });
+}
+
 // Format date for display
 function formatDate(dateString) {
     const date = new Date(dateString);
@@ -151,7 +220,7 @@ function handleApiError(error, defaultMessage = 'An error occurred') {
 }
 
 // Confirmation dialog
-function confirm(message) {
+function confirmAction(message) {
     return window.confirm(message);
 }
 
